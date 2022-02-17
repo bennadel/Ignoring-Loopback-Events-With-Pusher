@@ -1,0 +1,8 @@
+{
+	"pusher": {
+		"appID": "",
+		"appKey": "",
+		"appSecret": "",
+		"apiCluster": ""
+	}
+}

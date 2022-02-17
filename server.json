@@ -1,0 +1,12 @@
+{
+    "app":{
+        "cfengine":"lucee"
+    },
+    "name":"PusherClientIdRoundTrip",
+    "jvm":{
+        "args":"-Dlucee.preserve.case=true"
+    },
+    "web":{
+        "webroot":"wwwroot"
+    }
+}
