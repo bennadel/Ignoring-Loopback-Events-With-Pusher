@@ -45,7 +45,7 @@
 		// This UUID will be "injected" into each outgoing API AJAX request as an HTTP
 		// header. This is not specifically tied to the Pusher functionality; but, will be
 		// used to prevent "loop back" events.
-		var browserUuid = "browser-<cfoutput>#createUuid()#</cfoutput>";
+		var browserUuid = "browser-<cfoutput>#createUuid().lcase()#</cfoutput>";
 
 		// --------------------------------------------------------------------------- //
 		// --------------------------------------------------------------------------- //
@@ -81,6 +81,13 @@
 
 				}
 
+				// ASIDE: Couldn't we just use a "User ID" to ignore loopback events? No.
+				// Even if we included the originating "user" in the event, that's still
+				// not sufficient. A single user may have MULTIPLE BROWSER TABS open. And,
+				// we don't want to ignore the event in all browser tabs for that user -
+				// we only want to ignore the event in the single browser tab that
+				// optimistically reacted to an event.
+				// --
 				// If this event came from a DIFFERENT browser, then let's update our
 				// count locally to reflect the event.
 				incrementCounter();
