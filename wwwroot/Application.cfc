@@ -29,7 +29,7 @@ component
 
 		// When the browser is making AJAX calls to the API, it's going to inject a UUID
 		// for each client into the incoming HTTP Headers. Let's pluck that out and store
-		// it in the REQUEST scope where it can be globally-available from within the
+		// it in the REQUEST scope where it can be globally-available across the
 		// processing of the current request.
 		request.browserUuid = ( httpHeaders[ "X-Browser-UUID" ] ?: "" );
 

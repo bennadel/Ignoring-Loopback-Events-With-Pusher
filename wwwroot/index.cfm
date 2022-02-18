@@ -29,7 +29,7 @@
 	<!---
 		This counter value will be incremented both locally via click-handlers and
 		remotely via Pusher WebSockets. The goal is not to keep the counter in sync across
-		clients, only to emit events across clients (keeping it super simple).
+		clients, only to emit events across clients (keeping the demo super simple).
 	--->
 	<div class="counter" style="font-size: 40px ;">
 		0
@@ -44,7 +44,7 @@
 		// Let's assign a universally-unique ID to every browser that the app renders.
 		// This UUID will be "injected" into each outgoing API AJAX request as an HTTP
 		// header. This is not specifically tied to the Pusher functionality; but, will be
-		// used to prevent "loop back" events.
+		// used to prevent "loopback" events.
 		var browserUuid = "browser-<cfoutput>#createUuid().lcase()#</cfoutput>";
 
 		// --------------------------------------------------------------------------- //
@@ -66,7 +66,6 @@
 
 				console.group( "Pusher Event" );
 				console.log( data );
-				console.groupEnd();
 
 				// When the ColdFusion server sends a "click" event to the Pusher API,
 				// Pusher turns around and sends that event to every client that is
@@ -76,10 +75,14 @@
 				// any events that were triggered by THIS browser.
 				if ( data.browserUuid === browserUuid ) {
 
-					console.warn( "Ignoring loopback event from local click." );
+					console.info( "%cIgnoring loopback event from local click.", "background-color: red ; color: white ;" );
+					console.groupEnd();
 					return;
 
 				}
+
+				console.info( "%cAccepting event from other browser.", "background-color: green ; color: white ;");
+				console.groupEnd();
 
 				// ASIDE: Couldn't we just use a "User ID" to ignore loopback events? No.
 				// Even if we included the originating "user" in the event, that's still
@@ -101,8 +104,8 @@
 		// Each count will be locally-stored in the browser. The point of this demo isn't
 		// to synchronize the counts across browsers, it's to prevent loopback event
 		// processing for a single browser.
-		var count = 0;
 		var counter = $( ".counter" );
+		var count = Number( counter.html().trim() ); // Initialize counter from DOM state.
 
 		jQuery( document ).click( handleDocumentClick );
 
@@ -118,6 +121,11 @@
 			// Make an API call to trigger the click event on all Pusher-subscribed
 			// clients. We're including the browser's UUID so that we can later ignore
 			// loopback events for this client.
+			// --
+			// NOTE: In this demo, there's only one action. But, try to imagine that this
+			// headers{} object was being augmented in a central location using an API
+			// client or something like an HTTP Interceptor - some place that knows
+			// nothing about Pusher or WebSockets.
 			$.ajax({
 				method: "post",
 				url: "./api.cfm",

@@ -21,7 +21,7 @@ component
 		variables.defaultTimeout = arguments.defaultTimeout;
 
 		// When sending an event to multiple channels at one time, the Pusher API only
-		// allows for upto 100 channels to be targeted within a single request. If an
+		// allows for up to 100 channels to be targeted within a single request. If an
 		// event needs to go to more channels, the groupings will be spread across
 		// multiple HTTP requests.
 		variables.maxChannelChunkSize = 100;

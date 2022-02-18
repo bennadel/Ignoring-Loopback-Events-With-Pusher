@@ -2,8 +2,9 @@
 
 	config = deserializeJson( fileRead( "../config.json" ) );
 
-	// For the sake of simplicity, I'm just re-creating the Pusher lib on every request.
-	// In a production context, I would cache this in the Application scope.
+	// For the sake of simplicity, I'm just re-creating the Pusher ColdFusion component on
+	// every request. In a production context, I would cache this in the Application scope
+	// or a dependency-injection (DI) container.
 	pusher = new lib.Pusher(
 		appID = config.pusher.appID,
 		appKey = config.pusher.appKey,
